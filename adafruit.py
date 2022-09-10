@@ -30,8 +30,14 @@ env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
 variant = board.get("build.variant")
+bsp = board.get("build.bsp.name", "adafruit")
 
-FRAMEWORK_DIR = platform.get_package_dir("framework-arduinoadafruitnrf52")
+if bsp == "adafruit":
+    FRAMEWORK_DIR = platform.get_package_dir("framework-arduinoadafruitnrf52")
+elif bsp == "adafruit-seeed":
+    FRAMEWORK_DIR = platform.get_package_dir("framework-arduinoadafruitnrf52-seeed")
+else:
+    FRAMEWORK_DIR = ""
 assert isdir(FRAMEWORK_DIR)
 
 CMSIS_DIR = platform.get_package_dir("framework-cmsis")
